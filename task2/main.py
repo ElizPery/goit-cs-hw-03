@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 
 def db_init():
+    # Load env for the mongodb
     load_dotenv()
     DB_NAME = os.getenv('DB_NAME')
     DB_PASSWORD = os.getenv('DB_PASSWORD')
@@ -14,7 +15,8 @@ def db_init():
     )
 
     db = client.book
-
+    
+    # Insert some of the files
     result_many = db.cats.insert_many(
         [
             {
@@ -37,11 +39,13 @@ def db_init():
 
     return db
 
+# Function to read all files from the collection
 def read_all_from_db(db):
     result = db.cats.find({})
     for el in result:
         print(el)
 
+# Function to read file by name from the collection
 def read_from_db(db):
     name = input("Please enter name of the cat that you want to see >>> ").strip()
     try:
@@ -50,6 +54,7 @@ def read_from_db(db):
     except:
         print("Something went wrong, please try again!")
 
+# Function to update age by name from the collection
 def update_age_by_name(db):
     name = input("Please enter name of the cat that you want to update >>> ").strip()
     age = input("Please enter new age for this cat >>> ")
@@ -60,6 +65,7 @@ def update_age_by_name(db):
     except:
         print("Something went wrong, please try again!")
 
+# Function to update feature by name from the collection
 def update_features_by_name(db):
     name = input("Please enter name of the cat that you want to update >>> ").strip()
     feature = input("Please enter new feature for this cat >>> ")
@@ -72,6 +78,7 @@ def update_features_by_name(db):
     except:
         print("Something went wrong, please try again!")
 
+# Function to delete file by name from the collection
 def delete_by_name(db):
     name = input("Please enter name of the cat that you want to delete >>> ").strip()
     try:
@@ -80,6 +87,7 @@ def delete_by_name(db):
     except:
         print("Something went wrong, please try again!")
 
+# Function to delete all from the collection
 def delete_all(db):
     try:
         db.cats.delete_many({})
